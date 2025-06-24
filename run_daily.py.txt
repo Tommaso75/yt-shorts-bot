@@ -1,0 +1,17 @@
+import os
+import random
+import subprocess
+from scripts import generate_text_local, generate_voice, create_video, upload_youtube, send_telegram
+
+def main(category):
+    print(f"▶️ Generazione contenuto per: {category}")
+    script_text = generate_text_local.generate_text(category)
+    voice_path = generate_voice.create_voice(script_text, category)
+    video_path = create_video.create_video(script_text, voice_path, category)
+    youtube_url = upload_youtube.upload(video_path, script_text)
+    send_telegram.send(youtube_url, category)
+
+if __name__ == "__main__":
+    import sys
+    category = sys.argv[1] if len(sys.argv) > 1 else random.choice(["stampa3d", "gaming"])
+    main(category)
