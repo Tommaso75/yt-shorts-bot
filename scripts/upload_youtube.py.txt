@@ -1,0 +1,33 @@
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+import pickle, os
+
+def upload(video_path, title):
+    creds = None
+    if os.path.exists('config/token.pickle'):
+        with open('config/token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    else:
+        flow = InstalledAppFlow.from_client_secrets_file('config/client_secrets.json', scopes=[
+            "https://www.googleapis.com/auth/youtube.upload"])
+        creds = flow.run_console()
+        with open('config/token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    youtube = build('youtube', 'v3', credentials=creds)
+    request = youtube.videos().insert(
+        part="snippet,status",
+        body={
+            "snippet": {
+                "title": title[:90],
+                "description": "Short generato automaticamente",
+                "tags": ["shorts", "automazione"],
+                "categoryId": "28"
+            },
+            "status": {"privacyStatus": "public"}
+        },
+        media_body=video_path
+    )
+    response = request.execute()
+    return f"https://youtu.be/{response['id']}"

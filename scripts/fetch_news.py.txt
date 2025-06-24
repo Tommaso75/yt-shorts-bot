@@ -1,0 +1,16 @@
+import requests
+from bs4 import BeautifulSoup
+
+def get_gaming_news():
+    url = "https://www.metacritic.com/browse/games/release-date/coming-soon/all/date"
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    html = requests.get(url, headers=headers).text
+    soup = BeautifulSoup(html, "html.parser")
+    titles = [tag.text.strip() for tag in soup.select(".clamp-summary-wrap h3")][:3]
+    return f"Giochi in uscita: {', '.join(titles)}" if titles else "Nessuna notizia trovata."
+
+def get_3d_news():
+    return "Nuova stampante 3D da Bambu Lab annunciata oggi!"
+
+def fetch_news(category):
+    return get_3d_news() if category == "stampa3d" else get_gaming_news()

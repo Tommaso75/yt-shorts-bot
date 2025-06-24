@@ -1,0 +1,9 @@
+from moviepy.editor import *
+
+def create_video(text, audio_path, category):
+    image_path = f"assets/{category}/image.jpg"
+    audio = AudioFileClip(audio_path)
+    image = ImageClip(image_path).set_duration(audio.duration).set_audio(audio).resize(height=1080)
+    output_path = f"assets/{category}/output.mp4"
+    image.write_videofile(output_path, fps=24)
+    return output_path

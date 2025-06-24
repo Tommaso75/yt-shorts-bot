@@ -1,0 +1,7 @@
+def generate_text(category):
+    if category == "stampa3d":
+        return "Ecco 3 trucchi per migliorare le tue stampe 3D: 1. Controlla il livellamento, 2. Usa le giuste temperature, 3. Pulisci l'ugello regolarmente."
+    elif category == "gaming":
+        return "Scopri i 3 giochi più attesi della settimana: Elden Ring DLC, Hollow Knight Silksong e Starfield!"
+    else:
+        return "Benvenuto nel bot YouTube Shorts!"

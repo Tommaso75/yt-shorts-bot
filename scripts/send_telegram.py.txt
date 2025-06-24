@@ -1,0 +1,11 @@
+import requests
+import json
+
+TOKEN = "**********:AAHopWvyyD3h_SLzuZlP63LWHf79-kbcnTk"
+CHAT_ID = "831710907"
+
+def send(video_url, category):
+    message = f"🎬 Nuovo Short pubblicato ({category}):\n{video_url}"
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    data = {"chat_id": CHAT_ID, "text": message}
+    requests.post(url, data=data)
